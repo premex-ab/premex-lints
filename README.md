@@ -20,13 +20,16 @@ allprojects {
 <p>
 
 ```groovy
-allprojects {
-    repositories {
-        // ...
-        maven {
-            url 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
-        }
+repositories {
+    // ...
+    maven {
+        url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     }
+}
+```
+```groovy
+dependencies {
+    lintChecks("se.premex:premex-lints:1.0.0-SNAPSHOT")
 }
 ```
 
