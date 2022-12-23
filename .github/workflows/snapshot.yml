@@ -28,7 +28,7 @@ jobs:
       - name: Publish application
         run: |
           echo VERSION_NAME=1.0.0-SNAPSHOT > ./local.properties
-          ./gradlew publishToSonatype
+          ./gradlew :lint-checks:publishToSonatype --stacktrace
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
