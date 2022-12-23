@@ -26,10 +26,6 @@ lint {
 
 dependencies {
     compileOnly(libs.bundles.lintApi)
-    ksp(libs.autoService.ksp)
-    implementation(libs.com.fasterxml.jackson.module.jackson.module.kotlin)
-    implementation(libs.com.fasterxml.jackson.dataformat.jackson.dataformat.xml)
-    implementation(libs.autoService.annotations)
     testImplementation(libs.bundles.lintTest)
     testImplementation(libs.junit)
 }
