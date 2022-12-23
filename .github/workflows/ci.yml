@@ -34,16 +34,6 @@ jobs:
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1
 
-      - name: Generate cache key
-        run: ./.github/checksum.sh checksum.txt
-
-      - uses: actions/cache@v3
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ matrix.job }}-${{ hashFiles('checksum.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-${{ matrix.job }}-
-
       - name: Install JDK ${{ matrix.ci_java_version }}
         uses: actions/setup-java@v3
         with:
@@ -62,14 +52,10 @@ jobs:
         with:
           arguments: check --stacktrace
 
-      - name: (Fail-only) Bundle the build report
-        if: failure()
-        run: find . -type d -name 'reports' | zip -@ -r build-reports.zip
-
       - name: (Fail-only) Upload the build report
         if: failure()
         uses: actions/upload-artifact@v3
         with:
           name: error-report
-          path: build-reports.zip
+          path: '**/build/reports/*'
 
