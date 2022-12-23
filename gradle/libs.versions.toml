@@ -1,0 +1,32 @@
+[versions]
+kotlin = "1.7.21"
+jvmTarget = "11"
+lint = "31.0.0-alpha08"
+nexus = "1.1.0"
+androidgitversion = "0.4.14"
+jackson = "2.14.0"
+
+[plugins]
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.21.0" }
+dokka = { id = "org.jetbrains.dokka", version = "1.7.20" }
+lint = { id = "com.android.lint", version = "7.3.1" }
+ksp = { id = "com.google.devtools.ksp", version = "1.7.21-1.0.8" }
+mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.22.0" }
+io-github-gradle-nexus-publish-plugin = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexus" }
+com-gladed-androidgitversion = { id = "com.gladed.androidgitversion", version.ref = "androidgitversion" }
+
+[libraries]
+autoService-annotations = "com.google.auto.service:auto-service-annotations:1.0"
+autoService-ksp = "dev.zacsweers.autoservice:auto-service-ksp:1.0.0"
+junit = "junit:junit:4.13.2"
+lint-api = { module = "com.android.tools.lint:lint-api", version.ref = "lint" }
+lint-checks = { module = "com.android.tools.lint:lint-checks", version.ref = "lint" }
+lint = { module = "com.android.tools.lint:lint", version.ref = "lint" }
+lint-tests = { module = "com.android.tools.lint:lint-tests", version.ref = "lint" }
+lint-testUtils = { module = "com.android.tools:testutils", version.ref = "lint" }
+com-fasterxml-jackson-module-jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+com-fasterxml-jackson-dataformat-jackson-dataformat-xml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-xml", version.ref = "jackson" }
+
+[bundles]
+lintApi = ["lint-api", "lint-checks"]
+lintTest = ["lint", "lint-tests", "lint-testUtils"]
