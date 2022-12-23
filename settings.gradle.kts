@@ -27,4 +27,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "premex-lints"
 
-include(":premex-lint-checks")
+include(":lint-checks")
