@@ -29,7 +29,7 @@ repositories {
 ```
 ```groovy
 dependencies {
-    lintChecks("se.premex:premex-lints:1.0.0-SNAPSHOT")
+    lintChecks("se.premex:premex-lint-checks:1.0.0-SNAPSHOT")
 }
 ```
 
@@ -40,7 +40,7 @@ Add it to your module dependencies:
 
 ```
 dependencies {
-    lintChecks("se.premex:premex-lints:<latest_version>")
+    lintChecks("se.premex:premex-lint-checks:<latest_version>")
 }
 ```
 
