@@ -14,11 +14,7 @@ import com.android.tools.lint.detector.api.Severity.ERROR
 import com.android.tools.lint.detector.api.SourceCodeScanner
 import com.android.tools.lint.detector.api.XmlContext
 import com.android.tools.lint.detector.api.XmlScanner
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.MapperFeature
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
-import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.android.utils.forEach
 import com.intellij.psi.PsiField
 import com.intellij.psi.PsiMethod
 import org.jetbrains.uast.UCallExpression
@@ -29,9 +25,11 @@ import org.jetbrains.uast.ULiteralExpression
 import org.jetbrains.uast.UQualifiedReferenceExpression
 import org.jetbrains.uast.util.isConstructorCall
 import org.w3c.dom.Element
+import org.w3c.dom.Node
+import org.w3c.dom.NodeList
 import se.premex.lint.DenyListedEntry.Companion.MatchAll
-import se.premex.lint.deny.BlockList
 import java.util.EnumSet
+import javax.xml.parsers.DocumentBuilderFactory
 
 /**
  * Deny-listed APIs that we don't want people to use.
@@ -209,36 +207,66 @@ internal class DenyListedApiDetector : Detector(), SourceCodeScanner, XmlScanner
 
         internal val BLOCK_FILE_LIST =
             FileOption(
-                "file-block-list",
-                "A file with comma-separated list of words that should not be used in source code.",
-                null,
-                "This property should define a file to a comma-separated list of words that should not be used in source code."
+                name = "file-block-list",
+                description = "A file with comma-separated list of words that should not be used in source code.",
+                defaultValue = null,
+                explanation = "This property should define a file to a comma-separated list of words that should not be used in source code."
             )
 
-        private fun loadBlocklist(context: Context): DenyListConfig {
-
-            val fileContent = BLOCK_FILE_LIST.getValue(context.configuration)
-                ?.readText()
-
-            val xmlDeserializer = XmlMapper(JacksonXmlModule().apply {
-                setDefaultUseWrapper(false)
-            }).registerKotlinModule()
-                .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true)
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-
-            val value: BlockList =
-                xmlDeserializer.readValue(fileContent, BlockList::class.java)
-
-            val entries: List<DenyListedEntry> = value.blocked.map {
-                DenyListedEntry(
-                    className = it.className,
-                    functionName = it.functionName,
-                    errorMessage = it.errorMessage,
-                    parameters = it.parameter,
-                    fieldName = it.fieldName,
-                    arguments = it.arguments?.split(","),
-                )
+        private fun lastChildValue(elementsByTagName: NodeList): List<String>? {
+            val list = mutableListOf<String>()
+            elementsByTagName.forEach {
+                list.add(it.lastChild.nodeValue)
             }
+            return if (list.size > 0) {
+                list
+            } else {
+                null
+            }
+        }
+
+        private fun NodeList.text(): String? {
+            return if (this.length > 0) {
+                this.item(0).lastChild.nodeValue
+            } else {
+                null
+            }
+        }
+
+        private fun loadBlocklist(context: Context): DenyListConfig {
+            val fileContent = BLOCK_FILE_LIST.getValue(context.configuration)
+
+            val entries: MutableList<DenyListedEntry> = mutableListOf()
+
+            val builderFactory = DocumentBuilderFactory.newInstance()
+            val docBuilder = builderFactory.newDocumentBuilder()
+            val doc = docBuilder.parse(fileContent)
+
+            val nList: NodeList = doc.getElementsByTagName("Blocked")
+            nList.forEach {
+
+
+                if (nList.item(0).nodeType == Node.ELEMENT_NODE) {
+                    val element = it as Element
+
+                    entries.add(
+                        DenyListedEntry(
+                            className = element.getElementsByTagName("ClassName")
+                                .text()!!,
+                            functionName = element.getElementsByTagName("FunctionName")
+                                .text(),
+                            fieldName = element.getElementsByTagName("FieldName")
+                                .text(),
+                            parameters = lastChildValue(element.getElementsByTagName("Parameters")),
+                            arguments = lastChildValue(element.getElementsByTagName("Arguments")),
+                            errorMessage = element.getElementsByTagName("ErrorMessage")
+                                .text()!!,
+                        )
+                    )
+                }
+            }
+
+
             return DenyListConfig(entries)
         }
 
