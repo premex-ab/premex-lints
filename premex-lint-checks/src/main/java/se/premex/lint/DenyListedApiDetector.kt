@@ -28,6 +28,7 @@ import org.w3c.dom.Element
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
 import se.premex.lint.DenyListedEntry.Companion.MatchAll
+import java.io.File
 import java.util.EnumSet
 import javax.xml.parsers.DocumentBuilderFactory
 
@@ -234,35 +235,57 @@ internal class DenyListedApiDetector : Detector(), SourceCodeScanner, XmlScanner
         }
 
         private fun loadBlocklist(context: Context): DenyListConfig {
-            val fileContent = BLOCK_FILE_LIST.getValue(context.configuration)
 
             val entries: MutableList<DenyListedEntry> = mutableListOf()
 
-            val builderFactory = DocumentBuilderFactory.newInstance()
-            val docBuilder = builderFactory.newDocumentBuilder()
-            val doc = docBuilder.parse(fileContent)
+            val fileContent: File = BLOCK_FILE_LIST.getValue(context.configuration)
+                ?: File(context.mainProject.dir, "blocklist.xml")
 
-            val nList: NodeList = doc.getElementsByTagName("Blocked")
-            nList.forEach {
+            if (!fileContent.exists()) {
+                java.lang.RuntimeException(
+                    fileContent.absolutePath +
+                            " does not exists. Please create it and configure " +
+                            "a blocklist before using BlockListedApi lint check"
+                ).printStackTrace()
+            } else {
+                try {
+
+                    val builderFactory = DocumentBuilderFactory.newInstance()
+                    val docBuilder = builderFactory.newDocumentBuilder()
+                    val doc = docBuilder.parse(fileContent)
+
+                    val nList: NodeList = doc.getElementsByTagName("Blocked")
+                    nList.forEach {
 
 
-                if (nList.item(0).nodeType == Node.ELEMENT_NODE) {
-                    val element = it as Element
+                        if (nList.item(0).nodeType == Node.ELEMENT_NODE) {
+                            val element = it as Element
 
-                    entries.add(
-                        DenyListedEntry(
-                            className = element.getElementsByTagName("ClassName")
-                                .text()!!,
-                            functionName = element.getElementsByTagName("FunctionName")
-                                .text(),
-                            fieldName = element.getElementsByTagName("FieldName")
-                                .text(),
-                            parameters = lastChildValue(element.getElementsByTagName("Parameters")),
-                            arguments = lastChildValue(element.getElementsByTagName("Arguments")),
-                            errorMessage = element.getElementsByTagName("ErrorMessage")
-                                .text()!!,
-                        )
+                            entries.add(
+                                DenyListedEntry(
+                                    className = element.getElementsByTagName("ClassName")
+                                        .text()!!,
+                                    functionName = element.getElementsByTagName("FunctionName")
+                                        .text(),
+                                    fieldName = element.getElementsByTagName("FieldName")
+                                        .text(),
+                                    parameters = lastChildValue(element.getElementsByTagName("Parameters")),
+                                    arguments = lastChildValue(element.getElementsByTagName("Arguments")),
+                                    errorMessage = element.getElementsByTagName("ErrorMessage")
+                                        .text()!!,
+                                )
+                            )
+                        }
+                    }
+
+                } catch (exception: Exception) {
+                    val error = java.lang.RuntimeException(
+                        "Error parsing ${fileContent.absolutePath} xml file for BlockListedApi " +
+                                "lint checks please validate that the xml file has " +
+                                "the correct format",
+                        exception
                     )
+                    error.printStackTrace()
                 }
             }
 

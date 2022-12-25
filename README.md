@@ -2,9 +2,28 @@
 
 A set of lint checks by Premex
 
+
+## Block listed APIs [BlockListedApi]
+
+The `BlockListedApi` is a configurable list of APIs that you might want to block developers from
+using that you just can't deprecate because they are 3rd party APIs. Maybe you want to stop developer
+to use Context#getDrawable() and enforce Context#getDrawableCompat() instead. Or maybe you have 
+created some legacy code years ago and want to create a lint check because a 
+Deprecation warning is not enough.
+
+Create a [blocklist.xml](samples/blocklist.xml) file in the root of your project. Or configure your own path with lint options if you need the same config file for a multi-module project.
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="BlockListedApi" severity="error">
+      <option name="file-block-list" value="blocklist.xml" />
+    </issue>
+</lint>
+```
+
 ## How to include in your project
 
-The library is available via MavenCentral:
+The library is (SOON, use snapshots until released) available via MavenCentral:
 
 ```groovy
 allprojects {
