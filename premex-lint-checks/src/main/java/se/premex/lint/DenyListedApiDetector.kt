@@ -209,9 +209,9 @@ internal class DenyListedApiDetector : Detector(), SourceCodeScanner, XmlScanner
         internal val BLOCK_FILE_LIST =
             FileOption(
                 name = "file-block-list",
-                description = "A file with comma-separated list of words that should not be used in source code.",
+                description = "A configuration xml file to point out classes, methods and fields that should be blocked",
                 defaultValue = null,
-                explanation = "This property should define a file to a comma-separated list of words that should not be used in source code."
+                explanation = "To get help with configuration, please visit https://github.com/premex-ab/premex-lints"
             )
 
         private fun lastChildValue(elementsByTagName: NodeList): List<String>? {
