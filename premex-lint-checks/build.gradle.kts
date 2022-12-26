@@ -1,13 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm")
+    id("org.jetbrains.kotlin.jvm") version "1.7.22"
     // Run lint on the lints! https://groups.google.com/g/lint-dev/c/q_TVEe85dgc
     alias(libs.plugins.lint)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.mavenPublish)
 }
-
 
 val PUBLISH_GROUP_ID: String by extra("se.premex.premex-lints")
 val PUBLISH_VERSION: String by extra(rootProject.version as String)
@@ -38,3 +36,22 @@ tasks.withType<KotlinCompile>().configureEach {
         languageVersion = "1.4"
     }
 }
+
+pluginManager.withPlugin("java") {
+    configure<JavaPluginExtension> { toolchain { languageVersion.set(JavaLanguageVersion.of(17)) } }
+
+    tasks.withType<JavaCompile>().configureEach { options.release.set(11) }
+}
+
+pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
+    tasks.withType<KotlinCompile>().configureEach {
+        kotlinOptions {
+            jvmTarget = "11"
+            // TODO re-enable once lint uses Kotlin 1.5
+            //        allWarningsAsErrors = true
+            //        freeCompilerArgs = freeCompilerArgs + listOf("-progressive")
+        }
+    }
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach { jvmTarget = "11" }
