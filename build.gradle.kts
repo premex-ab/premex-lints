@@ -1,14 +1,13 @@
-import io.gitlab.arturbosch.detekt.Detekt
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
     alias(libs.plugins.mavenPublish) apply false
     alias(libs.plugins.dokka) apply false
     alias(libs.plugins.detekt)
     alias(libs.plugins.lint) apply false
-    alias(libs.plugins.ksp) apply false
     alias(libs.plugins.io.github.gradle.nexus.publish.plugin)
     alias(libs.plugins.com.gladed.androidgitversion)
+    alias(libs.plugins.com.github.ben.manes.versions)
 }
 
 androidGitVersion {
@@ -21,25 +20,18 @@ val gitOrLocalVersion: String =
 
 version = gitOrLocalVersion
 
-subprojects {
-    pluginManager.withPlugin("java") {
-        configure<JavaPluginExtension> { toolchain { languageVersion.set(JavaLanguageVersion.of(17)) } }
-
-        tasks.withType<JavaCompile>().configureEach { options.release.set(11) }
+// https://github.com/ben-manes/gradle-versions-plugin
+tasks.withType<DependencyUpdatesTask> {
+    rejectVersionIf {
+        isNonStable(candidate.version)
     }
+}
 
-    pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
-        tasks.withType<KotlinCompile>().configureEach {
-            kotlinOptions {
-                jvmTarget = "11"
-                // TODO re-enable once lint uses Kotlin 1.5
-                //        allWarningsAsErrors = true
-                //        freeCompilerArgs = freeCompilerArgs + listOf("-progressive")
-            }
-        }
-    }
-
-    tasks.withType<Detekt>().configureEach { jvmTarget = "11" }
+fun isNonStable(version: String): Boolean {
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+    val isStable = stableKeyword || regex.matches(version)
+    return isStable.not()
 }
 
 apply(from = "${rootDir}/gradle/publish-root.gradle")

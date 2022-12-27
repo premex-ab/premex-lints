@@ -25,8 +25,10 @@ Create a [blocklist.xml](samples/blocklist.xml) file in the root of your project
 
 The library is (SOON, use snapshots until released) available via MavenCentral:
 
-```groovy
-allprojects {
+Add to `settings.gradle.kts`
+
+```kotlin
+dependencyResolutionManagement {
     repositories {
         // ...
         mavenCentral()
@@ -38,15 +40,22 @@ allprojects {
 <summary>Snapshots of the development version are available in Sonatype's snapshots repository.</summary>
 <p>
 
-```groovy
-repositories {
-    // ...
-    maven {
-        url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+Add to `settings.gradle.kts`
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        // ...
+        maven {
+            url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+        }
     }
 }
 ```
-```groovy
+
+Add to `modules/build.gradle.kts`
+
+```kotlin
 dependencies {
     lintChecks("se.premex.premex-lints:premex-lint-checks:1.0.0-SNAPSHOT")
 }
@@ -55,11 +64,11 @@ dependencies {
 </p>
 </details>
 
-Add it to your module dependencies:
+Add to `modules/build.gradle.kts`
 
-```
+```kotlin
 dependencies {
-    lintChecks("se.premex.premex-lints:premex-lint-checks:<latest_version>")
+    lintChecks("se.premex.premex-lints:premex-lint-checks:+")
 }
 ```
 

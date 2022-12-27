@@ -1,18 +1,19 @@
 [versions]
-kotlin = "1.7.21"
+kotlin = "1.7.22"
 jvmTarget = "11"
-lint = "31.0.0-alpha08"
+lint = "30.3.1"
 nexus = "1.1.0"
 androidgitversion = "0.4.14"
 
 [plugins]
-detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.21.0" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.22.0" }
 dokka = { id = "org.jetbrains.dokka", version = "1.7.20" }
 lint = { id = "com.android.lint", version = "7.3.1" }
 ksp = { id = "com.google.devtools.ksp", version = "1.7.21-1.0.8" }
 mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.22.0" }
 io-github-gradle-nexus-publish-plugin = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexus" }
 com-gladed-androidgitversion = { id = "com.gladed.androidgitversion", version.ref = "androidgitversion" }
+com-github-ben-manes-versions = { id = "com.github.ben-manes.versions", version = "0.44.0" }
 
 [libraries]
 junit = "junit:junit:4.13.2"
