@@ -53,8 +53,8 @@ afterEvaluate {
 
                 pom {
                     name = PUBLISH_ARTIFACT_ID
-                    description = 'Firebase Compose'
-                    url = 'https://github.com/premex-ab/lint'
+                    description = 'Block-listed APIs'
+                    url = 'https://github.com/premex-ab/premex-lints'
                     licenses {
                         license {
                             name = 'The Apache License, Version 2.0'
@@ -70,9 +70,9 @@ afterEvaluate {
                     }
 
                     scm {
-                        connection = 'scm:git@github.com:premex-ab/lint.git'
-                        developerConnection = 'scm:git:ssh://github.com/premex-ab/lint.git'
-                        url = 'https://github.com/premex-ab/lint/tree/main'
+                        connection = 'scm:git@github.com:premex-ab/premex-lints.git'
+                        developerConnection = 'scm:git:ssh://github.com/premex-ab/premex-lints.git'
+                        url = 'https://github.com/premex-ab/premex-lints/tree/main'
                     }
                 }
             }
