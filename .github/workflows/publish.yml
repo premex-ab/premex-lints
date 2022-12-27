@@ -25,9 +25,8 @@ jobs:
           distribution: 'zulu'
           java-version: 11
 
-      # change to closeAndReleaseSonatypeStagingRepository once confident about the release
       - name: Publish application
-        run: ./gradlew :premex-lint-checks:publishToSonatype closeSonatypeStagingRepository
+        run: ./gradlew :premex-lint-checks:publishToSonatype closeAndReleaseSonatypeStagingRepository
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}

@@ -1,3 +1,5 @@
+[![Maven Central](https://img.shields.io/maven-central/v/se.premex.premex-lints/premex-lint-checks)](https://search.maven.org/search?q=g:se.premex.premex-lints%20AND%20a:premex-lint-checks)
+
 # Premex lints
 
 A set of lint checks by Premex
@@ -23,7 +25,7 @@ Create a [blocklist.xml](samples/blocklist.xml) file in the root of your project
 
 ## How to include in your project
 
-The library is (SOON, use snapshots until released) available via MavenCentral:
+The library is available via MavenCentral:
 
 Add to `settings.gradle.kts`
 
