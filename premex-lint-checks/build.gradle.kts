@@ -9,7 +9,7 @@ plugins {
 
 val PUBLISH_GROUP_ID: String by extra("se.premex.premex-lints")
 val PUBLISH_VERSION: String by extra(rootProject.version as String)
-val PUBLISH_ARTIFACT_ID by extra("core")
+val PUBLISH_ARTIFACT_ID by extra("premex-lint-checks")
 
 apply(from = "${rootProject.projectDir}/gradle/publish-module.gradle")
 
