@@ -13,7 +13,7 @@ ksp = { id = "com.google.devtools.ksp", version = "1.7.21-1.0.8" }
 mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.22.0" }
 io-github-gradle-nexus-publish-plugin = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexus" }
 com-gladed-androidgitversion = { id = "com.gladed.androidgitversion", version.ref = "androidgitversion" }
-com-github-ben-manes-versions = { id = "com.github.ben-manes.versions", version = "0.44.0" }
+com-github-ben-manes-versions = { id = "com.github.ben-manes.versions", version = "0.46.0" }
 
 [libraries]
 junit = "junit:junit:4.13.2"
