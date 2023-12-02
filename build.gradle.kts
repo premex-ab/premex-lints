@@ -37,4 +37,4 @@ fun isNonStable(version: String): Boolean {
     return isStable.not()
 }
 
-apply(from = "${rootDir}/gradle/publish-root.gradle")
+apply(from = "gradle/publish-root.gradle")
