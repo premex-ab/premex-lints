@@ -1,8 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.9.21"
-    // Run lint on the lints! https://groups.google.com/g/lint-dev/c/q_TVEe85dgc
+    alias(libs.plugins.org.jetbrains.kotlin.jvm)
     alias(libs.plugins.lint)
     alias(libs.plugins.mavenPublish)
 }
@@ -46,7 +45,7 @@ pluginManager.withPlugin("java") {
 pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
-            jvmTarget = "17"
+            jvmTarget = libs.versions.jvmTarget.get()
             // TODO re-enable once lint uses Kotlin 1.5
             //        allWarningsAsErrors = true
             //        freeCompilerArgs = freeCompilerArgs + listOf("-progressive")
@@ -54,4 +53,6 @@ pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
     }
 }
 
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach { jvmTarget = "17" }
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    jvmTarget = libs.versions.jvmTarget.get()
+}
