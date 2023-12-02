@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: Linux
+    runs-on: ubuntu-latest # Linux
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -20,7 +20,7 @@ jobs:
           git tag
 
       - name: Setup java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: 11
