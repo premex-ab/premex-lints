@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.org.jetbrains.kotlin.jvm)
@@ -6,11 +8,21 @@ plugins {
     alias(libs.plugins.mavenPublish)
 }
 
+val versionFile = File("versions.properties")
+val versions = Properties().apply {
+    if (versionFile.exists()) {
+        FileInputStream(versionFile).use {
+            load(it)
+        }
+    }
+}
+val version = versions.getProperty("V_VERSION", "0.0.1")
+
 val PUBLISH_GROUP_ID: String by extra("se.premex.premex-lints")
-val PUBLISH_VERSION: String by extra(rootProject.version as String)
+val PUBLISH_VERSION: String by extra(version as String)
 val PUBLISH_ARTIFACT_ID by extra("premex-lint-checks")
 
-apply(from = "${rootProject.projectDir}/gradle/publish-module.gradle")
+apply(from = "../gradle/publish-module.gradle")
 
 lint {
     htmlReport = true
@@ -37,18 +49,21 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 pluginManager.withPlugin("java") {
-    configure<JavaPluginExtension> { toolchain { languageVersion.set(JavaLanguageVersion.of(17)) } }
+    configure<JavaPluginExtension> {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
+    }
 
-    tasks.withType<JavaCompile>().configureEach { options.release.set(17) }
+    tasks.withType<JavaCompile>().configureEach {
+        options.release.set(17)
+    }
 }
 
 pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
             jvmTarget = libs.versions.jvmTarget.get()
-            // TODO re-enable once lint uses Kotlin 1.5
-            //        allWarningsAsErrors = true
-            //        freeCompilerArgs = freeCompilerArgs + listOf("-progressive")
         }
     }
 }

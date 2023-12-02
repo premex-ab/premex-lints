@@ -66,3 +66,5 @@ printf "DIRTY=%s\n" "$dirty"
 # Write the hash to versions.properties after the loop
 printf "HASH=%s\n" "$hash" >> versions.properties
 printf "DIRTY=%s\n" "$dirty" >> versions.properties
+
+cp versions.properties premex-lint-checks/versions.properties
