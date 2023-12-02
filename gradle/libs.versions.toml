@@ -13,7 +13,6 @@ org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kot
 ksp = { id = "com.google.devtools.ksp", version = "1.9.21-1.0.15" }
 mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.22.0" }
 io-github-gradle-nexus-publish-plugin = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexus" }
-com-gladed-androidgitversion = { id = "com.gladed.androidgitversion", version.ref = "androidgitversion" }
 com-github-ben-manes-versions = { id = "com.github.ben-manes.versions", version = "0.47.0" }
 
 [libraries]

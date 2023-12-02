@@ -25,6 +25,10 @@ jobs:
           distribution: 'zulu'
           java-version: 17
 
+      - name: "Calculate build number"
+        id: version_information
+        uses: ./.github/actions/version_information
+
       - name: Publish application
         run: ./gradlew :premex-lint-checks:publishToSonatype closeAndReleaseSonatypeStagingRepository
         env:

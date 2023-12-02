@@ -1,3 +1,6 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.io.FileInputStream
+import java.util.Properties
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
@@ -6,19 +9,19 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.lint) apply false
     alias(libs.plugins.io.github.gradle.nexus.publish.plugin)
-    alias(libs.plugins.com.gladed.androidgitversion)
     alias(libs.plugins.com.github.ben.manes.versions)
 }
 
-androidGitVersion {
-    tagPattern = "^v[0-9]+.*"
+val versionFile = File("versions.properties")
+val versions = Properties().apply {
+    if (versionFile.exists()) {
+        FileInputStream(versionFile).use {
+            load(it)
+        }
+    }
 }
 
-val gitOrLocalVersion: String =
-    com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir)
-        .getProperty("VERSION_NAME", androidGitVersion.name().replace("v", ""))
-
-version = gitOrLocalVersion
+version = versions.getProperty("V_VERSION", "0.0.1")
 
 // https://github.com/ben-manes/gradle-versions-plugin
 tasks.withType<DependencyUpdatesTask> {

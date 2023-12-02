@@ -40,6 +40,10 @@ jobs:
           distribution: 'zulu'
           java-version: ${{ matrix.ci_java_version }}
 
+      - name: "Calculate build number"
+        id: version_information
+        uses: ./.github/actions/version_information
+
       - name: Build
         uses: gradle/gradle-build-action@v2
         with:
