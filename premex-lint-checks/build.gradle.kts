@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -37,37 +36,4 @@ dependencies {
     compileOnly(libs.bundles.lintApi)
     testImplementation(libs.bundles.lintTest)
     testImplementation(libs.junit)
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        // Lint still requires 1.4 (regardless of what version the project uses), so this forces a lower
-        // language level for now. Similar to `targetCompatibility` for Java.
-        apiVersion = "1.4"
-        languageVersion = "1.4"
-    }
-}
-
-pluginManager.withPlugin("java") {
-    configure<JavaPluginExtension> {
-        toolchain {
-            languageVersion.set(JavaLanguageVersion.of(17))
-        }
-    }
-
-    tasks.withType<JavaCompile>().configureEach {
-        options.release.set(17)
-    }
-}
-
-pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
-    tasks.withType<KotlinCompile>().configureEach {
-        kotlinOptions {
-            jvmTarget = libs.versions.jvmTarget.get()
-        }
-    }
-}
-
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-    jvmTarget = libs.versions.jvmTarget.get()
 }

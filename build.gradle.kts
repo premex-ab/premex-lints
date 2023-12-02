@@ -1,4 +1,3 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import java.io.FileInputStream
 import java.util.Properties
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask

@@ -238,8 +238,7 @@ internal class DenyListedApiDetector : Detector(), SourceCodeScanner, XmlScanner
 
             val entries: MutableList<DenyListedEntry> = mutableListOf()
 
-            val fileContent: File = BLOCK_FILE_LIST.getValue(context.configuration)
-                ?: File(context.mainProject.dir, "blocklist.xml")
+            val fileContent: File = BLOCK_FILE_LIST.getValue(context.configuration)!!
 
             if (!fileContent.exists()) {
                 java.lang.RuntimeException(
