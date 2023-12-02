@@ -40,13 +40,13 @@ tasks.withType<KotlinCompile>().configureEach {
 pluginManager.withPlugin("java") {
     configure<JavaPluginExtension> { toolchain { languageVersion.set(JavaLanguageVersion.of(17)) } }
 
-    tasks.withType<JavaCompile>().configureEach { options.release.set(11) }
+    tasks.withType<JavaCompile>().configureEach { options.release.set(17) }
 }
 
 pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
     tasks.withType<KotlinCompile>().configureEach {
         kotlinOptions {
-            jvmTarget = "11"
+            jvmTarget = "17"
             // TODO re-enable once lint uses Kotlin 1.5
             //        allWarningsAsErrors = true
             //        freeCompilerArgs = freeCompilerArgs + listOf("-progressive")
@@ -54,4 +54,4 @@ pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
     }
 }
 
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach { jvmTarget = "11" }
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach { jvmTarget = "17" }
