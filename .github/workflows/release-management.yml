@@ -9,9 +9,9 @@ on:
 
 jobs:
   update_draft_release:
-    runs-on: Linux
+    runs-on: ubuntu-latest # Linux
     steps:
-      - uses: release-drafter/release-drafter@v5.24.0
+      - uses: release-drafter/release-drafter@v5
         with:
           config-name: release-drafter.yml
           disable-autolabeler: false
