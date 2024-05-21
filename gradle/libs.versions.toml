@@ -8,7 +8,7 @@ androidgitversion = "0.4.14"
 [plugins]
 detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.6" }
 dokka = { id = "org.jetbrains.dokka", version = "1.9.20" }
-lint = { id = "com.android.lint", version = "8.4.0" }
+lint = { id = "com.android.lint", version = "8.4.1" }
 ksp = { id = "com.google.devtools.ksp", version = "1.9.24-1.0.20" }
 mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.28.0" }
 io-github-gradle-nexus-publish-plugin = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexus" }
