@@ -9,7 +9,7 @@ androidgitversion = "0.4.14"
 detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.6" }
 dokka = { id = "org.jetbrains.dokka", version = "1.9.20" }
 lint = { id = "com.android.lint", version = "8.5.1" }
-ksp = { id = "com.google.devtools.ksp", version = "2.0.0-1.0.24" }
+ksp = { id = "com.google.devtools.ksp", version = "2.0.10-1.0.24" }
 mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.29.0" }
 io-github-gradle-nexus-publish-plugin = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexus" }
 com-gladed-androidgitversion = { id = "com.gladed.androidgitversion", version.ref = "androidgitversion" }
