@@ -1,7 +1,7 @@
 [versions]
 kotlin = "1.7.22"
 jvmTarget = "11"
-lint = "31.5.2"
+lint = "31.6.0"
 nexus = "2.0.0"
 androidgitversion = "0.4.14"
 
