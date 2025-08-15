@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "2.2.0"
+    id("org.jetbrains.kotlin.jvm") version "2.2.10"
     // Run lint on the lints! https://groups.google.com/g/lint-dev/c/q_TVEe85dgc
     alias(libs.plugins.lint)
     alias(libs.plugins.mavenPublish)
