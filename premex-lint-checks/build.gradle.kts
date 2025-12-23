@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "2.3.0"
+    alias(libs.plugins.kotlin.jvm)
     // Run lint on the lints! https://groups.google.com/g/lint-dev/c/q_TVEe85dgc
     alias(libs.plugins.lint)
     alias(libs.plugins.mavenPublish)
@@ -29,11 +29,10 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        // Lint still requires 1.4 (regardless of what version the project uses), so this forces a lower
-        // language level for now. Similar to `targetCompatibility` for Java.
-        apiVersion = "1.4"
-        languageVersion = "1.4"
+    compilerOptions {
+        // Lint requires at least Kotlin 2.0 language level when using Kotlin compiler 2.3.0+
+        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
+        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
     }
 }
 
@@ -45,11 +44,11 @@ pluginManager.withPlugin("java") {
 
 pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
     tasks.withType<KotlinCompile>().configureEach {
-        kotlinOptions {
-            jvmTarget = "11"
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
             // TODO re-enable once lint uses Kotlin 1.5
-            //        allWarningsAsErrors = true
-            //        freeCompilerArgs = freeCompilerArgs + listOf("-progressive")
+            //        allWarningsAsErrors.set(true)
+            //        freeCompilerArgs.add("-progressive")
         }
     }
 }
