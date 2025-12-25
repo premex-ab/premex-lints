@@ -30,8 +30,8 @@ dependencies {
 
 tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
-        // Lint still requires 1.4 (regardless of what version the project uses), so this forces a lower
-        // language level for now. Similar to `targetCompatibility` for Java.
+        // Kotlin 2.3.0 requires at least version 2.0. Previously this was set to 1.4 for lint compatibility,
+        // but that version is no longer supported.
         apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
         languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
     }
