@@ -1,7 +1,7 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "2.3.0" apply false
+    id("org.jetbrains.kotlin.jvm") version "2.3.10" apply false
     alias(libs.plugins.mavenPublish) apply false
     alias(libs.plugins.dokka) apply false
     alias(libs.plugins.detekt)
