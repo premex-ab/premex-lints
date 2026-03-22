@@ -26,7 +26,6 @@ jobs:
     env:
       DEP_OVERRIDES: 'true'
       DEP_OVERRIDE_LINT: ${{ matrix.ci_lint_version }}
-      DEP_OVERRIDE_KOTLIN: ${{ matrix.ci_kotlin_version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
