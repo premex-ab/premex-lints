@@ -10,6 +10,9 @@ on:
 jobs:
   update_draft_release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: release-drafter/release-drafter@v7.1.1
         with:
