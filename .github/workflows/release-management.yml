@@ -14,5 +14,6 @@ jobs:
       - uses: release-drafter/release-drafter@v7.1.1
         with:
           config-name: release-drafter.yml
+          commitish: ${{ github.event.pull_request.base.ref || github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
